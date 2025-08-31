@@ -1,6 +1,7 @@
 # UV LED Curing Box – Control + LED Board
 
 ## 📌 System Overview
+
 Two-board setup:
 
 1. **Control Board**  
@@ -48,12 +49,14 @@ Two-board setup:
 ## 📌 Wiring Details
 
 ### UV LED Board
+
 - 6 × strings of 3 LEDs in series + 150 Ω resistor  
 - All strings in parallel  
 - +12 V rail feeds resistors → LEDs → output to Control Board  
 - GND of strings connected together → goes back to MOSFET drain on Control Board  
 
 ### Fan Driver (BJT)
+
 - NPN transistor (2N2222/BC337/etc.)  
 - Fan + → +12 V  
 - Fan − → Collector  
@@ -62,6 +65,7 @@ Two-board setup:
 - Flyback diode across fan: cathode → +12 V, anode → Collector  
 
 ### MOSFET Driver (LEDs)
+
 - N-channel MOSFET (IRLZ44N)  
 - Source → GND  
 - Drain → LED array GND  
@@ -69,24 +73,29 @@ Two-board setup:
 - Pull-down resistor 10 kΩ gate → GND  
 
 ### Buttons
+
 - One side → GND  
 - Other side → D4–D7 (internal pull-ups enabled in code)  
 
 ### Buzzer
+
 - Active buzzer (5 V)  
 - + → D9  
 - − → GND  
 - (Optional 100 Ω series resistor)  
 
 ### Thermistor
+
 - 10k NTC + 10k resistor voltage divider  
 - NTC between 5 V and A0  
 - Resistor between A0 and GND  
 
 ### OLED
+
 - I²C (SDA → A4, SCL → A5, +5 V, GND)  
 
 ### Indicator LEDs
+
 - Red LED → D11 (through 220 Ω to GND)  
 - Green LED → D12 (through 220 Ω to GND)  
 
@@ -95,6 +104,7 @@ Two-board setup:
 ## 📌 Operating Logic
 
 ### Buttons
+
 | Button | Normal Timer Mode | Preset Edit Mode | Settings Menu |
 |--------|------------------|------------------|---------------|
 | ON/OFF | Start/Stop timer | N/A              | Change value of selected item |
@@ -103,10 +113,12 @@ Two-board setup:
 | SET    | Enter/exit preset edit mode | Confirm preset | Long press = enter/exit menu |
 
 ### Indicators
+
 - **Red LED:** ON = timer running  
 - **Green LED:** ON = timer finished, waiting reset  
 
 ### Buzzer Patterns
+
 - **Silent** = no beep  
 - **Single** = one short beep  
 - **Double** = two medium beeps  
@@ -115,6 +127,7 @@ Two-board setup:
 - **Chirp** = rising “chirp” tone  
 
 ### Settings Menu
+
 - Buzzer Pattern: Silent, Single, Double, Triple, Long, Chirp  
 - Lid Sensor: Enabled / Disabled  
 - Temp Limit: 40–90 °C in 5 °C steps (default 60 °C)  
@@ -122,5 +135,6 @@ Two-board setup:
 - Reset Presets: Restore defaults  
 
 ### Safety
+
 - Lid switch: timer pauses if lid open (unless disabled in settings)  
 - Thermistor: if LEDs exceed threshold → shut down, display warning  
